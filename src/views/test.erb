@@ -1,6 +1,29 @@
 <html>
     <head>
         <script src="/heat4us.js"></script>
+        <script src="/heatmap.js"></script>
+<script type="text/javascript">
+        window.onload = function(){
+            var xx = h337.create({"element": document.body, "radius": 25, "visible": true});
+
+            var test = { max: 120, data: [
+                        {x: 100, y: 100, count: 80},
+                        {x: 120, y: 120, count: 60},
+                        {x: 100, y: 80, count: 90},
+                        {x: 111, y: 110, count: 60},
+                        {x: 201, y: 150, count: 90},
+                        {x: 311, y: 110, count: 60},
+                        {x: 121, y: 510, count: 70},
+                        {x: 511, y: 110, count: 60},
+                        {x: 211, y: 110, count: 50},
+                        {x: 191, y: 110, count: 20},
+                        {x: 511, y: 110, count: 40}
+                        ]};
+            xx.store.setDataSet(test);
+        };
+
+        </script>
+
     </head>
     <body>
         <% 25.times do %>
