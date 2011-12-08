@@ -1,0 +1,16 @@
+bin/
+include/
+share/
+src/
+*.swp
+*.pyc
+.DS_Store
+.vagrant
+.bundle
+db/*.sqlite3
+log/*.log
+tmp/
+.sass-cache/
+
+*.swo
+db/*.csv
