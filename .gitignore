@@ -1,7 +1,6 @@
 bin/
 include/
 share/
-src/
 *.swp
 *.pyc
 .DS_Store
