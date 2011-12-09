@@ -22,17 +22,20 @@ get '/c' do
     width = request.params['w'].to_i
     height = request.params['h'].to_i
 
-    clicks = request.params['cl'].split('@').map do |item|
+    clicks = request.params['cl'] || ''
+    clicks = clicks.split('@').map do |item|
         items = item.split(',')
         [items[0].to_i, items[1].to_i]
     end
 
-    hovers = request.params['ho'].split('@').map do |item|
+    hovers = request.params['ho'] || ''
+    hovers = hovers.split('@').map do |item|
         items = item.split(',')
         [items[0].to_i, items[1].to_i]
     end
 
-    scrolls = request.params['sc'].split('@').map do |item|
+    scrolls = request.params['sc'] || ''
+    scrolls = scrolls.split('@').map do |item|
         items = item.split(',')
         [items[0].to_i, items[1].to_i]
     end

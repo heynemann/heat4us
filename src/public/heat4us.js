@@ -21,7 +21,8 @@
             this.options = options || {};
             this.options.flushInterval = 2000;
             this.options.getScrollInterval = 2000;
-            this.options.maxLength = 20;
+            this.options.maxLength = 40;
+            this.options.quadrantWidth = 25;
 
             this.head = document.getElementsByTagName('HEAD').item(0);
 
@@ -80,11 +81,18 @@
             this.scheduleFlush();
         },
 
-        sendData: function() {
-            var dt = new Date().getTime();
+        getDimensions: function() {
             var width = document.body.offsetWidth
             var height = document.body.offsetHeight
-            var url = ["dt=" + dt, "w=" + width.toString(), "h=" + height.toString()];
+
+            return { width: width, height: height };
+        },
+
+        sendData: function() {
+            var dt = new Date().getTime();
+            var dimensions = this.getDimensions();
+
+            var url = ["dt=" + dt, "w=" + dimensions.width.toString(), "h=" + dimensions.height.toString()];
             var itemsSent = 0;
 
             var clicks = [];
@@ -97,17 +105,17 @@
                 url.push("cl=" + clicks.join("@"));
             }
 
-            if (itemsSent < this.options.maxLength) { 
-                var hovers = [];
-                for (var i=0; i < Math.min(heat4us.data.hover.length, this.options.maxLength - itemsSent); i++) {
-                    var item = heat4us.data.hover.pop();
-                    ++itemsSent;
-                    hovers.push(item.x.toString() + "," + item.y.toString());
-                }
-                if (hovers) {
-                    url.push("ho=" + hovers.join("@"));
-                }
-            }
+            //if (itemsSent < this.options.maxLength) { 
+                //var hovers = [];
+                //for (var i=0; i < Math.min(heat4us.data.hover.length, this.options.maxLength - itemsSent); i++) {
+                    //var item = heat4us.data.hover.pop();
+                    //++itemsSent;
+                    //hovers.push(item.x.toString() + "," + item.y.toString());
+                //}
+                //if (hovers) {
+                    //url.push("ho=" + hovers.join("@"));
+                //}
+            //}
 
             if (itemsSent < this.options.maxLength) { 
                 var scrolls = [];
@@ -124,7 +132,7 @@
 
             url = url.join("&");
 
-            //this.addScript("/c?" + url);
+            this.addScript("/c?" + url);
         },
 
         addScript: function(url) {
@@ -132,6 +140,43 @@
             oScript.type = "text/javascript";
             oScript.src = url;
             this.head.appendChild(oScript);
+        },
+
+        getCoordsForQuad: function(dimensions, quadrant) {
+            var itemsPerRow = Math.floor(dimensions.width / this.options.quadrantWidth);
+            var yQuad = Math.ceil(quadrant / itemsPerRow) - 1;
+            var xQuad = quadrant % itemsPerRow == 0 ? itemsPerRow : (quadrant % itemsPerRow) - 1;
+
+            return {
+                x: (xQuad * this.options.quadrantWidth) + (this.options.quadrantWidth / 2),
+                y: (yQuad * this.options.quadrantWidth) + (this.options.quadrantWidth / 2)
+            };
+        },
+
+        plot: function(element, points) {
+            var xx = h337.create({"element": element, "radius": this.options.quadrantWidth, "visible": true});
+            var data = {
+                max: 0,
+                data: []
+            };
+
+            var dimensions = this.getDimensions();
+
+            for (var i=0; i < points.length; i++) {
+                var item = points[i];
+                coords = this.getCoordsForQuad(dimensions, item.quad);
+
+                if (item.count > data.max) data.max = item.count;
+
+                var dataItem = {
+                    x: coords.x,
+                    y: coords.y,
+                    count: item.count
+                };
+                console.log(dataItem);
+                data.data.push(dataItem);
+            }
+            xx.store.setDataSet(data);
         }
 
     };
