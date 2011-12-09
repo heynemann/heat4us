@@ -21,7 +21,7 @@
             this.options = options || {};
             this.options.flushInterval = 2000;
             this.options.getScrollInterval = 2000;
-            this.options.maxLength = 40;
+            this.options.maxLength = 200;
             this.options.quadrantWidth = 25;
 
             this.head = document.getElementsByTagName('HEAD').item(0);
@@ -105,17 +105,17 @@
                 url.push("cl=" + clicks.join("@"));
             }
 
-            //if (itemsSent < this.options.maxLength) { 
-                //var hovers = [];
-                //for (var i=0; i < Math.min(heat4us.data.hover.length, this.options.maxLength - itemsSent); i++) {
-                    //var item = heat4us.data.hover.pop();
-                    //++itemsSent;
-                    //hovers.push(item.x.toString() + "," + item.y.toString());
-                //}
-                //if (hovers) {
-                    //url.push("ho=" + hovers.join("@"));
-                //}
-            //}
+            if (itemsSent < this.options.maxLength) { 
+                var hovers = [];
+                for (var i=0; i < Math.min(heat4us.data.hover.length, this.options.maxLength - itemsSent); i++) {
+                    var item = heat4us.data.hover.pop();
+                    ++itemsSent;
+                    hovers.push(item.x.toString() + "," + item.y.toString());
+                }
+                if (hovers) {
+                    url.push("ho=" + hovers.join("@"));
+                }
+            }
 
             if (itemsSent < this.options.maxLength) { 
                 var scrolls = [];
@@ -154,7 +154,7 @@
         },
 
         plot: function(element, points) {
-            var xx = h337.create({"element": element, "radius": this.options.quadrantWidth, "visible": true});
+            var xx = h337.create({"element": element, "radius": this.options.quadrantWidth * 2, "visible": true});
             var data = {
                 max: 0,
                 data: []
@@ -173,7 +173,6 @@
                     y: coords.y,
                     count: item.count
                 };
-                console.log(dataItem);
                 data.data.push(dataItem);
             }
             xx.store.setDataSet(data);
