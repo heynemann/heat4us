@@ -13,3 +13,4 @@ tmp/
 
 *.swo
 db/*.csv
+*.swn

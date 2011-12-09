@@ -6,6 +6,12 @@ require 'time'
 require_relative 'updater'
 
 get '/' do
+    redis = Redis.new(:host => "127.0.0.1", :port => 6379)
+
+    upd = Updater.new
+
+    @data = upd.retrieve(redis, Time.now.strftime('%Y-%m-%d'))
+
     erb :test
 end
 
@@ -34,5 +40,5 @@ get '/c' do
     upd = Updater.new
     upd.update(redis, dt, width, height, clicks, hovers, scrolls)
 
-    "ok"
+    "heat4us.tracker.callback('#{ request.params['dt'] }');"
 end

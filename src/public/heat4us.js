@@ -21,7 +21,15 @@
             this.options = options || {};
             this.options.flushInterval = 2000;
             this.options.getScrollInterval = 2000;
+            this.options.maxLength = 20;
+
+            this.head = document.getElementsByTagName('HEAD').item(0);
+
             this.bindEvents();
+        },
+
+        callback: function(dt) {
+            console.log(dt);
         },
 
         bindEvents: function() {
@@ -77,39 +85,53 @@
             var width = document.body.offsetWidth
             var height = document.body.offsetHeight
             var url = ["dt=" + dt, "w=" + width.toString(), "h=" + height.toString()];
+            var itemsSent = 0;
 
             var clicks = [];
-            for (var i=0; i < heat4us.data.click.length; i++) {
-                var item = heat4us.data.click[i];
+            for (var i=0; i < Math.min(heat4us.data.click.length, this.options.maxLength); i++) {
+                var item = heat4us.data.click.pop();
+                ++itemsSent;
                 clicks.push(item.x.toString() + "," + item.y.toString());
             }
             if (clicks) {
                 url.push("cl=" + clicks.join("@"));
             }
-            heat4us.data.click = [];
 
-            var hovers = [];
-            for (var i=0; i < heat4us.data.hover.length; i++) {
-                var item = heat4us.data.hover[i];
-                hovers.push(item.x.toString() + "," + item.y.toString());
+            if (itemsSent < this.options.maxLength) { 
+                var hovers = [];
+                for (var i=0; i < Math.min(heat4us.data.hover.length, this.options.maxLength - itemsSent); i++) {
+                    var item = heat4us.data.hover.pop();
+                    ++itemsSent;
+                    hovers.push(item.x.toString() + "," + item.y.toString());
+                }
+                if (hovers) {
+                    url.push("ho=" + hovers.join("@"));
+                }
             }
-            if (hovers) {
-                url.push("ho=" + hovers.join("@"));
-            }
-            heat4us.data.hover = [];
 
-            var scrolls = [];
-            for (key in heat4us.data.scroll) {
-                scrolls.push(key + "," + heat4us.data.scroll[key]);
+            if (itemsSent < this.options.maxLength) { 
+                var scrolls = [];
+                for (key in heat4us.data.scroll) {
+                    ++itemsSent;
+                    scrolls.push(key + "," + heat4us.data.scroll[key]);
+                    if (itemsSent > this.options.maxLength) break;
+                }
+                if (scrolls) {
+                    url.push("sc=" + scrolls.join("@"));
+                }
+                heat4us.data.scroll = {};
             }
-            if (scrolls) {
-                url.push("sc=" + scrolls.join("@"));
-            }
-            heat4us.data.scroll = {};
 
             url = url.join("&");
 
-            console.log(url);
+            //this.addScript("/c?" + url);
+        },
+
+        addScript: function(url) {
+            var oScript= document.createElement("script");
+            oScript.type = "text/javascript";
+            oScript.src = url;
+            this.head.appendChild(oScript);
         }
 
     };
