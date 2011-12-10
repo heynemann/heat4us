@@ -1,0 +1,6 @@
+
+<% if user_signed_in? %>
+    Hey <%= current_user.name %>
+<% else %>
+    <%= link_to 'Sign in', signin_path %>
+<% end %>
