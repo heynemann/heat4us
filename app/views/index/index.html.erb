@@ -1,5 +1,13 @@
 <% if user_signed_in? %>
-    Hey <%= current_user.name %>
+  <div id="heatmap">
+    <% 25.times do %>
+        <p><% 20.times do %>lorem ipsum dolor sit amet<% end %></p>
+    <% end %>
+  </div>
+  <script src="/h4.js"></script>
+  <script>
+    h4.tracker.initialize('<%= current_user.id %>');
+  </script>
 <% else %>
-    <%= link_to 'Sign in', signin_path %>
+  <%= link_to 'Sign in', signin_path %>
 <% end %>

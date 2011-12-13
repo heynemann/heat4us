@@ -8,21 +8,23 @@
         };
     }
 
-    window.th = window.th || {};
+    window.h4 = window.h4 || {};
 
-    th.data = {
+    h4.data = {
         hover: [],
         click: [],
         scroll: {}
     };
 
-    th.tracker = {
-        initialize: function(options) {
+    h4.tracker = {
+        initialize: function(id, options) {
+            this.id = id;
             this.options = options || {};
             this.options.flushInterval = 2000;
             this.options.getScrollInterval = 2000;
             this.options.maxLength = 200;
             this.options.quadrantWidth = 25;
+            this.options.serverUrl = "http://local.heat4.us:3000"
 
             this.head = document.getElementsByTagName('HEAD').item(0);
 
@@ -35,14 +37,14 @@
 
         bindEvents: function() {
             window.onmousemove = function(ev) {
-                th.data.hover.push({
+                h4.data.hover.push({
                     x: ev.pageX,
                     y: ev.pageY
                 });
             };
 
             window.onclick = function(ev) {
-                th.data.click.push({
+                h4.data.click.push({
                     x: ev.pageX,
                     y: ev.pageY
                 });
@@ -53,27 +55,27 @@
         },
 
         scheduleScroll: function() {
-            if (th.scroll) {
-                clearTimeout(th.scroll);
+            if (h4.scroll) {
+                clearTimeout(h4.scroll);
             }
 
-            th.scroll = setTimeout(this.getScroll.bind(this), this.options.getScrollInterval);
+            h4.scroll = setTimeout(this.getScroll.bind(this), this.options.getScrollInterval);
         },
 
         getScroll: function() {
             var scroll = document.body.scrollTop;
-            if (!th.data.scroll[scroll]) th.data.scroll[scroll] = 0;
-            th.data.scroll[scroll] += 1;
+            if (!h4.data.scroll[scroll]) h4.data.scroll[scroll] = 0;
+            h4.data.scroll[scroll] += 1;
 
             this.scheduleScroll();
         },
 
         scheduleFlush: function() {
-            if (th.polling) {
-                clearTimeout(th.polling);
+            if (h4.polling) {
+                clearTimeout(h4.polling);
             }
 
-            th.polling = setTimeout(this.flush.bind(this), this.options.flushInterval);
+            h4.polling = setTimeout(this.flush.bind(this), this.options.flushInterval);
         },
 
         flush: function() {
@@ -92,12 +94,18 @@
             var dt = new Date().getTime();
             var dimensions = this.getDimensions();
 
-            var url = ["dt=" + dt, "w=" + dimensions.width.toString(), "h=" + dimensions.height.toString()];
+            var url = [
+                "id=" + this.id, 
+                "dt=" + dt, 
+                "w=" + dimensions.width.toString(), 
+                "h=" + dimensions.height.toString()
+            ];
+
             var itemsSent = 0;
 
             var clicks = [];
-            for (var i=0; i < Math.min(th.data.click.length, this.options.maxLength); i++) {
-                var item = th.data.click.pop();
+            for (var i=0; i < Math.min(h4.data.click.length, this.options.maxLength); i++) {
+                var item = h4.data.click.pop();
                 ++itemsSent;
                 clicks.push(item.x.toString() + "," + item.y.toString());
             }
@@ -107,8 +115,8 @@
 
             if (itemsSent < this.options.maxLength) { 
                 var hovers = [];
-                for (var i=0; i < Math.min(th.data.hover.length, this.options.maxLength - itemsSent); i++) {
-                    var item = th.data.hover.pop();
+                for (var i=0; i < Math.min(h4.data.hover.length, this.options.maxLength - itemsSent); i++) {
+                    var item = h4.data.hover.pop();
                     ++itemsSent;
                     hovers.push(item.x.toString() + "," + item.y.toString());
                 }
@@ -119,20 +127,20 @@
 
             if (itemsSent < this.options.maxLength) { 
                 var scrolls = [];
-                for (key in th.data.scroll) {
+                for (key in h4.data.scroll) {
                     ++itemsSent;
-                    scrolls.push(key + "," + th.data.scroll[key]);
+                    scrolls.push(key + "," + h4.data.scroll[key]);
                     if (itemsSent > this.options.maxLength) break;
                 }
                 if (scrolls) {
                     url.push("sc=" + scrolls.join("@"));
                 }
-                th.data.scroll = {};
+                h4.data.scroll = {};
             }
 
             url = url.join("&");
 
-            this.addScript("/heatmaps/new?" + url);
+            this.addScript(this.options.serverUrl + "/heatmaps/new?" + url);
         },
 
         addScript: function(url) {
@@ -144,4 +152,3 @@
     };
 }());
 
-th.tracker.initialize();

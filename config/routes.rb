@@ -1,3 +1,5 @@
+require "resque/server"
+
 Heat4us::Application.routes.draw do
 
   root :to => 'index#index'
@@ -7,8 +9,12 @@ Heat4us::Application.routes.draw do
   match '/signout' => 'sessions#destroy', :as => :signout
   match '/signin' => 'sessions#new', :as => :signin
 
+  match '/heatmap' => 'heatmaps#index'
+
   resources :heatmaps, :only => [:new] do
   end
+
+  mount Resque::Server.new, :at => "/resque"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

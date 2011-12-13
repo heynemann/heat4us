@@ -1,0 +1,17 @@
+<div id="heatmap">
+  <% 25.times do %>
+      <p><% 20.times do %>lorem ipsum dolor sit amet<% end %></p>
+  <% end %>
+</div>
+
+<script src="/assets/heatmap.js?body=1" type="text/javascript"></script>
+<script src="/assets/heatmap_viewer.js?body=1" type="text/javascript"></script>
+<script>
+  heat4us.tracker.plot(document.getElementById('heatmap'), [
+      <% for item in @list%>
+      { quad: <%= item[:quad] %>, count: <%= item[:count] %>},
+      <% end %>
+  ]);
+</script>
+
+
