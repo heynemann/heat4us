@@ -16,8 +16,9 @@ class HeatmapsController < ApplicationController
   end
 
   def index
+    tracking = 'hovers'
     hour_prefix = Time.now.strftime('%Y-%m-%d-%H')
-    list_key = "#{ current_user.id }-#{ hour_prefix }-list-clicks"
+    list_key = "#{ current_user.id }-#{ hour_prefix }-list-#{ tracking }"
     @list = $redis.smembers(list_key)
 
     @list.map! do |item|
