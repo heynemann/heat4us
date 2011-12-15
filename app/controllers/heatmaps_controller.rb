@@ -15,6 +15,11 @@ class HeatmapsController < ApplicationController
     render :text => "h4.tracker.callback('#{ request.params['dt'] }');"
   end
 
+  def new_screenshot
+    Resque.enqueue(Screenshot, "http://www.globo.com")
+    render :text => "ok"
+  end
+
   def index
     tracking = 'hovers'
     hour_prefix = Time.now.strftime('%Y-%m-%d-%H')

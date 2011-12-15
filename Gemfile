@@ -1,6 +1,8 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.3'
+gem 'uuid'
+gem 'aws-s3'
 gem 'mongoid'
 gem 'bson_ext'
 

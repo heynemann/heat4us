@@ -12,6 +12,9 @@ Heat4us::Application.routes.draw do
   match '/heatmap' => 'heatmaps#index'
 
   resources :heatmaps, :only => [:new] do
+    collection do
+        get :new_screenshot
+    end
   end
 
   mount Resque::Server.new, :at => "/resque"
