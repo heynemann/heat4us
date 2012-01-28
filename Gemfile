@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.3'
+gem 'rails', '3.2.1'
 gem 'uuid'
 gem 'aws-s3'
 gem 'mongoid'
@@ -14,9 +14,9 @@ gem 'jquery-rails'
 gem 'resque'
 
 group :assets do
-  gem 'sass-rails', '~> 3.1.5'
+  gem 'sass-rails', '~> 3.2.4'
   gem 'compass', '~> 0.12.alpha'
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier', '>= 1.2.2'
 end
 
 group :developement do

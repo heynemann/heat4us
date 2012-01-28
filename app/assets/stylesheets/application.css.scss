@@ -1,0 +1,127 @@
+@import "icons/*.png";
+@import "compass/css3/images";
+@import "compass/css3/transform";
+@import "compass/css3/transition";
+
+body {
+    // http://ptrn.it/Ab4WF1
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAVElEQVQYGXXOQQrAIAxEUZtdvf8VK57ALlu+EBlDzEbJPIZcT+vfGG85Ta13MQCfbNiTG2EGHZBPFKGCDSmMN64mkDfw6izkgDDeOJECb1BoGYjwB/PIM8SJD2afAAAAAElFTkSuQmCC) repeat;
+}
+
+#main-content {
+    margin: 23px auto 32px auto;
+    width: 1000px;
+}
+
+#first-section {
+    position: relative;
+    border: 1px solid #f8f8f8;
+    border-bottom: 0;
+    background: #f0f0f2;
+    @include background(linear-gradient(top, #f0f0f2 0%, #f8f8f8 59%, #f8f8f8 100%));
+
+    > .top-area {
+        overflow: hidden;
+
+        .flamee {
+            @include icons-sprite(flamee);
+            @include icons-sprite-dimensions(flamee);
+
+            float: left;
+            margin: 40px 0 0 40px;
+        }
+
+        ul {
+            float: right;
+            padding: 80px 65px 0 0;
+        }
+
+        li {
+            font-family: 'Maven Pro', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 15px;
+            display: inline-block;
+            padding-left: 18px;
+            color: #929499;
+
+            &.current {
+                color: #dd8f66;
+            }
+
+            &:first-child {
+                padding: 0;
+            }
+        }
+    }
+
+    .message-area {
+        margin-top: 66px;
+
+        span {
+            display: block;
+            text-align: center;
+            font-family: 'Maven Pro', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+        
+        .first-line {
+            font-size: 34px;
+            line-height: 34px;
+            color: #818181;
+        }
+
+        .second-line {
+            color: #4b4b4b;
+            font-weight: 700;
+            font-size: 80px;
+            line-height: 80px;
+        }
+
+        .third-line {
+            color: #b7b7b7;
+            font-size: 33px;
+        }
+
+        .info {
+            letter-spacing: 0;
+            margin: 20px 140px;
+            font-size: 13px;
+            color: #a0a09f;
+        }
+    }
+
+
+    $btn_sz: 67px;
+    $btn_padding: 26px;
+    .login-btn {
+        position: absolute;
+        right: -35px;
+        top: 52px;
+
+        text-align: center;
+        text-transform: uppercase;
+        color: #f8f8f8;
+        font-family: 'Maven Pro', sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        padding-top: $btn_padding;
+
+        display: block;
+        width: $btn_sz;
+        height: $btn_sz - $btn_padding;
+        border-radius: 50%;
+        border: 1px solid white;
+
+        // http://ptrn.it/yEsg4s
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAALElEQVQIHWO8OyHtPwMSYOUXY2BC4jOABH5/fIUQhAmAFIFVIguABdEFQIIAGm8PBidnZQUAAAAASUVORK5CYII=) repeat;
+
+        @include transition(all 200ms ease-in-out);
+
+        &:hover {
+            @include transform2d(scale(1.2));
+        }
+    }
+
+}

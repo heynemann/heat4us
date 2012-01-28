@@ -1,13 +1,53 @@
-<% if user_signed_in? %>
-  <div id="heatmap">
-    <% 25.times do %>
-        <p><% 20.times do %>lorem ipsum dolor sit amet<% end %></p>
+<div id="main-content">
+
+  <div id="first-section">
+
+    <% unless user_signed_in? %>
+      <%= link_to 'login', signin_path, :class => 'login-btn' %>
     <% end %>
+
+    <div class="top-area">
+      <div class="flamee"></div>
+      <ul>
+        <li class="current">Home</li>
+        <li>Features</li>
+        <li>Examples</li>
+        <li>Documentation</li>
+        <li>Support</li>
+      </ul>
+    </div>
+
+    <div class="message-area">
+      <span class="first-line">Know what your users are doing with</span>
+      <span class="second-line">powerful heatmaps</span>
+      <span class="third-line">showing their web experience.</span>
+
+      <span class="info">
+        DISCOVER FIRST-HAND what areas of your website actually matter with our reports. HEATMAPS THAT show your users INTERACTIONS. Scroll MAP that shows what portions they are SEEING.
+      </span>
+    </div>
+
+
+
+
+
+
+<!-- 
+    <% if user_signed_in? %>
+      <div id="heatmap">
+        <% 25.times do %>
+            <p><% 20.times do %>lorem ipsum dolor sit amet<% end %></p>
+        <% end %>
+      </div>
+      <script src="/h4.js"></script>
+      <script>
+        h4.tracker.initialize('<%= current_user.id %>');
+      </script>
+    <% else %>
+      <%= link_to 'Sign in', signin_path %>
+    <% end %>
+ -->
   </div>
-  <script src="/h4.js"></script>
-  <script>
-    h4.tracker.initialize('<%= current_user.id %>');
-  </script>
-<% else %>
-  <%= link_to 'Sign in', signin_path %>
-<% end %>
+
+</div>
+
