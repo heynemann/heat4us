@@ -10,24 +10,37 @@
       <div class="flamee"></div>
       <ul>
         <li class="current">Home</li>
-        <li>Features</li>
-        <li>Examples</li>
-        <li>Documentation</li>
-        <li>Support</li>
+        <li><a href="#">Features</a></li>
+        <li><a href="#">Examples</a></li>
+        <li><a href="#">Documentation</a></li>
+        <li><a href="#">Support</a></li>
       </ul>
     </div>
 
-    <div class="message-area">
-      <span class="first-line">Know what your users are doing with</span>
-      <span class="second-line">powerful heatmaps</span>
-      <span class="third-line">showing their web experience.</span>
+    <div class="carousel">
+      <ul class="pages">
+        <li>
+          <span class="first-line">Know what your users are doing with</span>
+          <span class="second-line">powerful heatmaps</span>
+          <span class="third-line">showing their web experience.</span>
 
-      <span class="info">
-        DISCOVER FIRST-HAND what areas of your website actually matter with our reports. HEATMAPS THAT show your users INTERACTIONS. Scroll MAP that shows what portions they are SEEING.
-      </span>
+          <span class="info">
+            DISCOVER FIRST-HAND what areas of your website actually matter with our reports. HEATMAPS THAT show your users INTERACTIONS. Scroll MAP that shows what portions they are SEEING. <a class="more-info" href="#"></a>
+          </span>
+        </li>
+        <li>
+          <span class="second-line">something else!!</span>
+        </li>
+        <li>
+          <span class="second-line">yet another</span>
+        </li>
+      </ul>
+
+      <div class="pagination">
+        <!-- Inline-block element, plz avoid spaces -->
+        <a href="#" class="current"></a><a href="#"></a><a href="#"></a>
+      </ul>
     </div>
-
-
 
 
 
@@ -43,6 +56,7 @@
         h4.tracker.initialize('<%= current_user.id %>');
       </script>
     <% end %>
+
   </div>
 
 </div>

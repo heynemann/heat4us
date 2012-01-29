@@ -3,14 +3,26 @@
 @import "compass/css3/transform";
 @import "compass/css3/transition";
 
+$container_size: 1000px;
+$contents_size: $container_size - 2px;
+
 body {
     // http://ptrn.it/Ab4WF1
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAVElEQVQYGXXOQQrAIAxEUZtdvf8VK57ALlu+EBlDzEbJPIZcT+vfGG85Ta13MQCfbNiTG2EGHZBPFKGCDSmMN64mkDfw6izkgDDeOJECb1BoGYjwB/PIM8SJD2afAAAAAElFTkSuQmCC) repeat;
 }
 
+a.more-info {
+    @include icons-sprite(forward);
+    @include icons-sprite-dimensions(forward);
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 2px;
+}
+
+
 #main-content {
     margin: 23px auto 32px auto;
-    width: 1000px;
+    width: $container_size;
 }
 
 #first-section {
@@ -55,41 +67,80 @@ body {
         }
     }
 
-    .message-area {
+    .carousel {
         margin-top: 66px;
+        width: 100%;
+        overflow: hidden;
 
-        span {
-            display: block;
+        ul.pages {
+            width: 10000px;
+            overflow: hidden;
+
+            @include transition(margin-left 200ms ease-in-out);
+
+            li {
+                width: $contents_size;
+                height: 258px;
+                float: left;
+            }
+
+            span {
+                display: block;
+                text-align: center;
+                font-family: 'Maven Pro', sans-serif;
+                text-transform: uppercase;
+                letter-spacing: -1px;
+            }
+            
+            .first-line {
+                font-size: 34px;
+                line-height: 34px;
+                color: #818181;
+            }
+
+            .second-line {
+                color: #4b4b4b;
+                font-weight: 700;
+                font-size: 80px;
+                line-height: 80px;
+            }
+
+            .third-line {
+                color: #b7b7b7;
+                font-size: 33px;
+            }
+
+            .info {
+                letter-spacing: 0;
+                line-height: 18px;
+                margin: 20px 140px;
+                font-size: 13px;
+                color: #a0a09f;
+            }
+        }
+
+        .pagination {
+            overflow: hidden;
+
             text-align: center;
-            font-family: 'Maven Pro', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-        }
-        
-        .first-line {
-            font-size: 34px;
-            line-height: 34px;
-            color: #818181;
+            a {
+                display: inline-block;
+                width: 17px;
+                height: 17px;
+                border: 4px solid #dbdcdf;
+                border-radius: 50%;
+                margin-left: 20px;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+                &.current {
+                    // http://ptrn.it/wGtQBr
+                    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAALElEQVQIHWP09vb+z4AE5OTkGJiQ+AwggUePHiEEYQIgRWCVyAJgQXQBkCAAy+wORA2lSdcAAAAASUVORK5CYII=) repeat;
+                }
+            }
         }
 
-        .second-line {
-            color: #4b4b4b;
-            font-weight: 700;
-            font-size: 80px;
-            line-height: 80px;
-        }
-
-        .third-line {
-            color: #b7b7b7;
-            font-size: 33px;
-        }
-
-        .info {
-            letter-spacing: 0;
-            margin: 20px 140px;
-            font-size: 13px;
-            color: #a0a09f;
-        }
     }
 
 
@@ -120,7 +171,7 @@ body {
         @include transition(all 200ms ease-in-out);
 
         &:hover {
-            @include transform2d(scale(1.2));
+            @include transform(scale(1.2));
         }
     }
 

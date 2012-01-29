@@ -59,6 +59,10 @@ html {
 }
 a {
   text-decoration: none;
+  color: inherit;
+}
+a:visited {
+  color: inherit;
 }
 // Focus states
 a:focus {
