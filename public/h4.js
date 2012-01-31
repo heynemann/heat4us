@@ -22,7 +22,7 @@
             this.options = options || {};
             this.options.flushInterval = 2000;
             this.options.getScrollInterval = 2000;
-            this.options.maxLength = 200;
+            this.options.maxLength = 150;
             this.options.quadrantWidth = 25;
             this.options.serverUrl = "http://local.heat4.us:3000"
 
@@ -95,7 +95,8 @@
             var dimensions = this.getDimensions();
 
             var url = [
-                "id=" + this.id, 
+                "id=" + this.id,
+                "l=" + window.location,
                 "dt=" + dt, 
                 "w=" + dimensions.width.toString(), 
                 "h=" + dimensions.height.toString()

@@ -201,8 +201,8 @@
                 canvas.height = acanvas.height = element.style.height.replace(/px/,"") || me.getHeight(element);
                 me.set("height", canvas.height);
                 canvas.style.position = acanvas.style.position = "absolute";
-                canvas.style.top = acanvas.style.top = "0";
-                canvas.style.left = acanvas.style.left = "0";
+                canvas.style.top = acanvas.style.top = element.offsetTop.toString() + "px";
+                canvas.style.left = acanvas.style.left = element.offsetLeft.toString() + "px";
                 canvas.style.zIndex = 1000000;
                 
                 if(!me.get("visible"))

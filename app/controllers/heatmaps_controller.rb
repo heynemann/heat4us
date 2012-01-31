@@ -6,12 +6,14 @@ class HeatmapsController < ApplicationController
     dt = request.params['dt'].to_i / 1000
     width = request.params['w'].to_i
     height = request.params['h'].to_i
+    height = request.params['h'].to_i
+    url = request.params['l']
 
     clicks = request.params['cl'] || ''
     hovers = request.params['ho'] || ''
     scrolls = request.params['sc'] || ''
 
-    Resque.enqueue(Heatmap, user_id, dt, width, height, clicks, hovers, scrolls)
+    Resque.enqueue(Heatmap, user_id, url, dt, width, height, clicks, hovers, scrolls)
     render :text => "h4.tracker.callback('#{ request.params['dt'] }');"
   end
 
